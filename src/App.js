@@ -10,8 +10,8 @@ import Table from 'react-bootstrap/Table'
 
 //COMPONENTS
 import NewTask from './components/createnewtask';
-
 import TasksView from './components/Tasks';
+import Nav from './components/navbar';
 const tasksAPI = new TasksView();
 
 
@@ -38,10 +38,14 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
+        {/* <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
         </header>
-        <h1 className="title">Action Items</h1>
+        <h1 className="title">Action Items</h1> */}
+      
+      {/*NAVAGATION BAR*/}
+        <Nav />
+
         <br/>
 
         <Container>
@@ -54,18 +58,22 @@ class App extends Component {
         
             {/* List of Current tasks */}
             <Col>
-              <p className="tasks">Tasks</p>
+              <p className="tasks_title">Tasks</p>
               <Table striped>
                 <thead>
-                  <tr>
+                  <tr className="tasks_chart">
                     <th> Title </th>
+                    <th> Date </th>
+                    <th> Duration </th>
                     <th> Interest </th>
                   </tr>
                 </thead>
                 <tbody>
                   {this.state.tasks.map( c =>
-                    <tr key={c.id}>
+                    <tr className="tasks_chart" key={c.id}>
                       <td>{c.title}</td>
+                      <td>{c.due_date}</td>
+                      <td>{c.duration}</td>
                       <td>{c.interest}</td>
                     </tr>)}
                 </tbody>

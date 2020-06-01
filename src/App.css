@@ -1,6 +1,7 @@
-/* .App {
-  text-align: center;
-} */
+.App {
+  background-color: black;
+  height: 100vmin;
+}
 
 .App-logo {
   height: 3vmin;
@@ -46,10 +47,15 @@
 .new_task{
   position: absolute;
   left: 15%;
+  color: white;
 }
 
-.tasks{
+.tasks_title{
   position: relative;
-  left: 60%;
   display: inline-block;
+  color: white;
+}
+
+.tasks_chart{
+  color:white;
 }

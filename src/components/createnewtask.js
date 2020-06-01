@@ -1,74 +1,80 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
 import TasksView from './Tasks';
 const tasksAPI = new TasksView();
 
-class NewTask extends Component{
-    
+class NewTask extends Component {
+
     constructor(props) {
         super(props);
-        
+
         // Allows addTask to access DOM elements?
         this.addTask = this.addTask.bind(this);
     }
-    
+
     // build task, then attempt to create
-    addTask(){
+    addTask() {
         tasksAPI.createTask(
-        {
-            "title": this.refs.title.value,
-            "due_date": 'some_date',
-            "duration": 'some_duration',
-            'interest': 5,
-        }).then((result) => {
-            console.log(result);
-            alert("Customer updated!");
-        }).catch(() => {
-            alert("There was an error, Please re-check your form.");
-        });
+            {
+                "title": this.refs.title.value,
+                "due_date": this.refs.date.value,
+                "duration": this.refs.duration.value,
+                'interest': 5,
+            }).then((result) => {
+                console.log(result);
+                alert("Customer updated!");
+            }).catch(() => {
+                alert("There was an error, Please re-check your form.");
+            });
     }
 
     /* !! Make forms with 'ref', don't know other ways to grab them, right now the first form has a ref='title' !! */
 
-    render(){
-        return(
+    render() {
+        return (
             <div className="new_task">
-            <Form>
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Create New task</Form.Label>
-                    <Form.Control type="text" placeholder="Task Name" ref='title' />
-                </Form.Group>
+                <Form>
+                    <Form.Group >
+                        <Form.Label>Create New task</Form.Label>
+                        <Form.Control type="text" placeholder="Enter task name" ref='title' />
+                    </Form.Group>
 
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label>field 1</Form.Label>
-                    <Form.Control type="text" placeholder="field 1" />
-                </Form.Group>
+                    <Form.Group controlId="">
+                        <Form.Label>Due date</Form.Label>
+                        <Form.Control type="date" placeholder="Enter due date" ref='date' />
+                    </Form.Group>
 
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label>field 2</Form.Label>
-                    <Form.Control type="text" placeholder="field 2" />
-                </Form.Group>
+                    <Form.Group controlId="">
+                        <Form.Label>Duration</Form.Label>
+                        <Form.Control type="text" placeholder="Enter duration" ref='duration' />
+                    </Form.Group>
 
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label>field 3</Form.Label>
-                    <Form.Control type="text" placeholder="field 3" />
-                </Form.Group>
+                    <Form.Group controlId="formBasicRange">
+                        <Form.Label>Interest level</Form.Label>
+                        <Form.Control type="range" />
+                    </Form.Group>
 
-                <Form.Group >
-                    <Form.Label>field 4</Form.Label>
-                    <Form.Control type="text" placeholder="field 4" />
-                </Form.Group>
-                <Form.Group>
-                    <Button variant="primary" size="lg" block onClick={this.addTask}>
-                        Create
+                    {/* <Form.Group controlId="formBasicPassword">
+                        <Form.Label>field 3</Form.Label>
+                        <Form.Control type="text" placeholder="field 3" />
+                    </Form.Group>
+
+                    <Form.Group >
+                        <Form.Label>field 4</Form.Label>
+                        <Form.Control type="text" placeholder="field 4" />
+                    </Form.Group> */}
+                    <Form.Group>
+                        <Button variant="primary" size="lg" block onClick={this.addTask}>
+                            Create
                     </Button>
-                </Form.Group>
-            </Form>
-        </div>
+                    </Form.Group>
+                </Form>
+            </div>
         )
     }
 }
-        
+
 export default NewTask;
