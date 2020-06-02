@@ -6,14 +6,14 @@ import './App.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Table from 'react-bootstrap/Table'
+import Table from 'react-bootstrap/Table';
 
 //COMPONENTS
-import NewTask from './components/createnewtask';
+import UserAuth from './components/Users/userAuth';
+import NewTask from './components/Tasks/taskCreate';
+import TasksView from './components/Tasks/taskAPI';
 
-import TasksView from './components/Tasks';
 const tasksAPI = new TasksView();
-
 
 class App extends Component {
   
@@ -21,6 +21,7 @@ class App extends Component {
     super(props);
 
     this.state = {
+      auth: false,
       tasks: [],
     };
 
@@ -43,10 +44,13 @@ class App extends Component {
         </header>
         <h1 className="title">Action Items</h1>
         <br/>
-
+        
         <Container>
-          <Row>
+          <Row> 
+            <UserAuth auth={this.state.auth}/>
+          </Row>
 
+          <Row>
             {/* Create New Task */}
             <Col>
               <NewTask />
@@ -71,7 +75,6 @@ class App extends Component {
                 </tbody>
               </Table>
             </Col>
-  
           </Row>
         </Container>
         

@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
 
-import TasksView from './Tasks';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+
+import TasksView from './taskAPI';
 const tasksAPI = new TasksView();
 
 class NewTask extends Component{
@@ -29,8 +30,6 @@ class NewTask extends Component{
             alert("There was an error, Please re-check your form.");
         });
     }
-
-    /* !! Make forms with 'ref', don't know other ways to grab them, right now the first form has a ref='title' !! */
 
     render(){
         return(
@@ -66,7 +65,7 @@ class NewTask extends Component{
                     </Button>
                 </Form.Group>
             </Form>
-        </div>
+            </div>
         )
     }
 }
