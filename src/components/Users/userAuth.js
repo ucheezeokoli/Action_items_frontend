@@ -8,6 +8,11 @@ class UserAuth extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            username: '',
+            password: '',
+        };
+
         this.log_in = this.log_in.bind(this);
         this.log_out = this.log_out.bind(this);
     }
@@ -16,13 +21,13 @@ class UserAuth extends Component {
         return(
             <Form>
                 <Form.Group>
-                    <Form.Control type="text" placeholder="username"/>
+                    <Form.Control type="text" placeholder="username" value={this.state.username}/>
                 </Form.Group>
                 <Form.Group>
-                    <Form.Control type="password" placeholder="password"/>
+                    <Form.Control type="password" placeholder="password" value={this.state.password}/>
                 </Form.Group>
                 <Form.Group>
-                    <Button>Enter</Button>
+                    <Button onClick={this.props.handle_login(this.state)}>Enter</Button>
                 </Form.Group>
             </Form>
         )

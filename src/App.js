@@ -21,20 +21,78 @@ class App extends Component {
     super(props);
 
     this.state = {
-      auth: false,
+      auth: localStorage.getItem('token') ? true : false,
+      username: '',
       tasks: [],
     };
 
   }
 
-  // grab tasks from database
+
   componentDidMount() {
+    // retrieve user token
+    if(this.state.auth) {
+      fetch('https://localhost:8000/users/current_user/', {
+        header: {
+          Authorization: `JWT ${localStorage.getItem('token')}`
+        }
+      })
+      .then(res => res.json())
+      .then(json => {
+        this.setState({username: json.username});
+      });
+    }
+
+    // grab tasks from database
     var self = this;
     tasksAPI.getTasks().then(function (result) {
       console.log(result);
       self.setState({tasks: result.data})
     });
   }
+
+  handle_login = (data) => {
+    //e.preventDefault();
+    fetch('http://localhost:8000/token-auth/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(json => {
+      localStorage.setItem('token', json.token);
+      this.setState({
+        auth: true,
+        username: json.username,
+      });
+    });
+  }
+
+  handle_signup = (e, data) => {
+    e.preventDefault();
+    fetch('http://localhost:8000/core/users/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(json => {
+        localStorage.setItem('token', json.token);
+        this.setState({
+          auth: true,
+          username: json.username
+        });
+      });
+  };
+
+  handle_logout = () => {
+    localStorage.removeItem('token');
+    this.setState({ auth: false, username: '' });
+  };
 
   render() {
     return (
@@ -47,7 +105,9 @@ class App extends Component {
         
         <Container>
           <Row> 
-            <UserAuth auth={this.state.auth}/>
+            <UserAuth 
+            auth={this.state.auth}
+            handle_login={this.handle_login}/>
           </Row>
 
           <Row>
