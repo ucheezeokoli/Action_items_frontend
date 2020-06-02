@@ -32,7 +32,7 @@ class App extends Component {
   componentDidMount() {
     // retrieve user token
     if(this.state.auth) {
-      fetch('https://localhost:8000/users/current_user/', {
+      fetch('http://localhost:8000/users/current_user/', {
         header: {
           Authorization: `JWT ${localStorage.getItem('token')}`
         }
@@ -58,7 +58,7 @@ class App extends Component {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify({username: 'hoanguyen', password: 'password'})
     })
     .then(res => res.json())
     .then(json => {
@@ -70,8 +70,7 @@ class App extends Component {
     });
   }
 
-  handle_signup = (e, data) => {
-    e.preventDefault();
+  handle_signup = (data) => {
     fetch('http://localhost:8000/core/users/', {
       method: 'POST',
       headers: {
@@ -107,7 +106,8 @@ class App extends Component {
           <Row> 
             <UserAuth 
             auth={this.state.auth}
-            handle_login={this.handle_login}/>
+            handle_login={this.handle_login}
+            handle_logout={this.handle_logout}/>
           </Row>
 
           <Row>

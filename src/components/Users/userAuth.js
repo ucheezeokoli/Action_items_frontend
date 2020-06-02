@@ -27,7 +27,7 @@ class UserAuth extends Component {
                     <Form.Control type="password" placeholder="password" value={this.state.password}/>
                 </Form.Group>
                 <Form.Group>
-                    <Button onClick={this.props.handle_login(this.state)}>Enter</Button>
+                    <Button onClick={this.props.handle_login}>Enter</Button>
                 </Form.Group>
             </Form>
         )
@@ -35,7 +35,7 @@ class UserAuth extends Component {
 
     log_out() {
         return(
-            <Button>Exit</Button>
+            <Button onClick={this.props.handle_logout}>Exit</Button>
         )
     }
 
