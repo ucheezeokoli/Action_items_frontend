@@ -5,13 +5,26 @@ export default class TasksView{
     constructor(){}
 
     getTasks() {
-        console.log("get tasks");
-        const url = `${API_URL}/api/tasks/`;
-        return axios.get(url).then(response => response.data);
+        const dest = `${API_URL}/api/tasks/`;
+        var token = localStorage.getItem('token');
+        console.log(token);
+        return axios({
+            method: 'get',
+            url: dest,
+            headers: {'Authorization': `JWT ${token}`},
+        })
+        .then(response => response.data);
     }
 
     createTask(task) {
-        const url = `${API_URL}/api/tasks/`;
-        return axios.post(url,task);
+        const dest = `${API_URL}/api/tasks/`;
+        var token = localStorage.getItem('token');
+        console.log(token);
+        return axios({
+            method: 'post',
+            url: dest,
+            data: task,
+            headers: {'Authorization': `JWT ${token}`},
+        });
     }
 }

@@ -6,14 +6,12 @@ import './App.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
 
 //COMPONENTS
 import UserAuth from './components/Users/userAuth';
+import ShowTask from './components/Tasks/taskDisplay';
 import NewTask from './components/Tasks/taskCreate';
-import TasksView from './components/Tasks/taskAPI';
-
-const tasksAPI = new TasksView();
 
 class App extends Component {
   
@@ -21,72 +19,43 @@ class App extends Component {
     super(props);
 
     this.state = {
-      auth: localStorage.getItem('token') ? true : false,
+      auth: false,
       username: '',
-      tasks: [],
     };
 
   }
 
-
   componentDidMount() {
-    // retrieve user token
+    var curr_token = localStorage.getItem('token');
+    if (curr_token == null || curr_token == 'undefined'){
+      this.state.auth = false;
+    }
+    else{ 
+      console.log("setting")
+      this.state.auth = true;
+    }
+
+    // retrieve user from oken
     if(this.state.auth) {
       fetch('http://localhost:8000/users/current_user/', {
-        header: {
-          Authorization: `JWT ${localStorage.getItem('token')}`
+        headers: {
+          'Authorization': `JWT ${localStorage.getItem('token')}`
         }
       })
       .then(res => res.json())
       .then(json => {
+        console.log(json.username);
         this.setState({username: json.username});
       });
     }
-
-    // grab tasks from database
-    var self = this;
-    tasksAPI.getTasks().then(function (result) {
-      console.log(result);
-      self.setState({tasks: result.data})
-    });
   }
 
-  handle_login = (data) => {
-    //e.preventDefault();
-    fetch('http://localhost:8000/token-auth/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({username: 'hoanguyen', password: 'password'})
+  updateUser = (val) => {
+    this.setState({
+      auth: true,
+      username: val,
     })
-    .then(res => res.json())
-    .then(json => {
-      localStorage.setItem('token', json.token);
-      this.setState({
-        auth: true,
-        username: json.username,
-      });
-    });
   }
-
-  handle_signup = (data) => {
-    fetch('http://localhost:8000/core/users/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-      .then(res => res.json())
-      .then(json => {
-        localStorage.setItem('token', json.token);
-        this.setState({
-          auth: true,
-          username: json.username
-        });
-      });
-  };
 
   handle_logout = () => {
     localStorage.removeItem('token');
@@ -101,43 +70,33 @@ class App extends Component {
         </header>
         <h1 className="title">Action Items</h1>
         <br/>
-        
-        <Container>
-          <Row> 
-            <UserAuth 
-            auth={this.state.auth}
-            handle_login={this.handle_login}
-            handle_logout={this.handle_logout}/>
-          </Row>
+          {this.state.auth ? 
+          <Container>
+            <Row>
+              Hi {this.state.username}
+            </Row>
 
-          <Row>
-            {/* Create New Task */}
-            <Col>
-              <NewTask />
-            </Col>
-        
-            {/* List of Current tasks */}
-            <Col>
-              <p className="tasks">Tasks</p>
-              <Table striped>
-                <thead>
-                  <tr>
-                    <th> Title </th>
-                    <th> Interest </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.tasks.map( c =>
-                    <tr key={c.id}>
-                      <td>{c.title}</td>
-                      <td>{c.interest}</td>
-                    </tr>)}
-                </tbody>
-              </Table>
-            </Col>
-          </Row>
-        </Container>
-        
+            <Row>
+              <Col>
+                <NewTask />
+              </Col>
+              <Col>
+                <ShowTask />
+              </Col>
+              <Button onClick={this.handle_logout}>Sign Out</Button>
+            </Row>
+          </Container>
+          :
+          <Container>
+            <Row> 
+              <UserAuth 
+                auth={this.state.auth}
+                handle_login={this.handle_login}
+                handle_logout={this.handle_logout}
+                updateUser={this.updateUser}/>
+            </Row>
+          </Container>
+          }
       </div>
     );
   }

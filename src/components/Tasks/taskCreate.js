@@ -25,7 +25,7 @@ class NewTask extends Component{
             'interest': 5,
         }).then((result) => {
             console.log(result);
-            alert("Customer updated!");
+            alert("Tasks updated!");
         }).catch(() => {
             alert("There was an error, Please re-check your form.");
         });
