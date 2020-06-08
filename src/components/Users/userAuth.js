@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+
+const API_AUTH_URL = 'http://localhost:8000';
 
 class UserAuth extends Component {
 
@@ -18,34 +21,56 @@ class UserAuth extends Component {
         this.handle_login = this.handle_login.bind(this);
     }
 
-    handle_login = (data) => {
-        fetch('http://localhost:8000/token-auth/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({username: this.refs.username.value, password: this.refs.password.value})
+    handle_login = () => {
+        axios({
+            method: 'post',
+            url: `${API_AUTH_URL}/token-auth/`,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            data: {
+                username: this.refs.username.value,
+                password: this.refs.password.value,
+            } 
         })
-        .then(res => res.json())
-        .then(json => {
-          localStorage.setItem('token', json.token);
-          this.props.updateUser(json.user.username);
-        }).catch(() => alert("trouble!"));
+        .then(res => {
+            console.log(res.data);
+            localStorage.setItem('token', res.data.token);
+            this.props.updateUser(res.data.user.username);
+        }).catch(() => alert("trouble!"))
     }
 
-    handle_signup = (data) => {
-        fetch('http://localhost:8000/users/users/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({username: this.refs.username.value, password: this.refs.password.value})
+    handle_signup = () => {
+        axios({
+            method: 'post',
+            url: `${API_AUTH_URL}/users/users/`,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            data: {
+                username: this.refs.username.value,
+                password: this.refs.password.value,
+            } 
         })
-          .then(res => res.json())
-          .then(json => {
-            localStorage.setItem('token', json.token);
-            this.props.updateUser(json.username);
-        }).catch(() => alert("trouble!"));
+        .then(res => {
+            localStorage.setItem('token', res.data.token);
+            this.props.updateUser(res.data.username);
+        }).catch(err => {
+            console.log(err.response);
+            let err_msg = "";
+            if (err.response.data.username) {
+                for (let x in err.response.data.username) {
+                    err_msg += "username: " + err.response.data.username[x] + "\n";
+                }
+            }
+            if (err.response.data.password) {
+                for (let x in err.response.data.password) {
+                    err_msg += "password: " + err.response.data.password[x] + "\n";
+                }            }
+
+
+            alert(err_msg);
+        })
     };
     
     log_in(){

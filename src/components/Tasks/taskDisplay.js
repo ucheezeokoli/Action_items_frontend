@@ -19,8 +19,8 @@ class ShowTask extends Component{
     tasks() {
         // grab tasks from database
         var self = this;
-        tasksAPI.getTasks().
-        then(function (result) {
+        tasksAPI.getTasks()
+        .then(function (result) {
             console.log(result);
             self.setState({tasks: result.data})
         });

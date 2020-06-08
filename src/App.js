@@ -27,7 +27,7 @@ class App extends Component {
 
   componentDidMount() {
     var curr_token = localStorage.getItem('token');
-    if (curr_token == null || curr_token == 'undefined'){
+    if (curr_token === null || curr_token === 'undefined'){
       this.state.auth = false;
     }
     else{ 
@@ -35,7 +35,7 @@ class App extends Component {
       this.state.auth = true;
     }
 
-    // retrieve user from oken
+    // retrieve user from token
     if(this.state.auth) {
       fetch('http://localhost:8000/users/current_user/', {
         headers: {
@@ -78,10 +78,10 @@ class App extends Component {
 
             <Row>
               <Col>
-                <NewTask />
+                <NewTask user={this.state.username}/>
               </Col>
               <Col>
-                <ShowTask />
+                <ShowTask user={this.state.username}/>
               </Col>
               <Button onClick={this.handle_logout}>Sign Out</Button>
             </Row>
