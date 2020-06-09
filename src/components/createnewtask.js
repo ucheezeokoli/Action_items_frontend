@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
+import CreateSharpIcon from '@material-ui/icons/CreateSharp';
+
+
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 import TasksView from './Tasks';
 const tasksAPI = new TasksView();
@@ -47,11 +50,18 @@ class NewTask extends Component {
                         <Form.Control type="date" placeholder="Enter due date" ref='date' />
                     </Form.Group>
 
+                    {/* <InlineDateTimePicker /> */}
+
                     <Form.Group controlId="">
                         <Form.Label>Duration</Form.Label>
                         <Form.Control type="text" placeholder="Enter duration" ref='duration' />
                     </Form.Group>
 
+                    <Form.Group>
+                        <Form.File id="" label="Upload file" />
+                    </Form.Group>
+
+                    
                     <Form.Group controlId="formBasicRange">
                         <Form.Label>Interest level</Form.Label>
                         <Form.Control type="range" />
@@ -69,7 +79,7 @@ class NewTask extends Component {
                     <Form.Group>
                         <Button variant="primary" size="lg" block onClick={this.addTask}>
                             Create
-                    </Button>
+                        </Button>                  
                     </Form.Group>
                 </Form>
             </div>

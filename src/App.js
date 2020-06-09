@@ -1,92 +1,26 @@
-import React, {Component} from 'react';
-import logo from './flip-flip-blk.svg';
+import React, { Component } from 'react';
 import './App.css';
+import Home from './Home';
+import Loginpage from './Loginpage';
+import Edit from './Edit';
+import Landing from './LandingPage';
+import Tasks from './ViewTasks';
 
-// Bootstrap
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Table from 'react-bootstrap/Table'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-//COMPONENTS
-import NewTask from './components/createnewtask';
-import TasksView from './components/Tasks';
-import Nav from './components/navbar';
-const tasksAPI = new TasksView();
-
-
-class App extends Component {
-  
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      tasks: [],
-    };
-
-  }
-
-  // grab tasks from database
-  componentDidMount() {
-    var self = this;
-    tasksAPI.getTasks().then(function (result) {
-      console.log(result);
-      self.setState({tasks: result.data})
-    });
-  }
-
-  render() {
-    return (
-      <div className="App">
-        {/* <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-        </header>
-        <h1 className="title">Action Items</h1> */}
-      
-      {/*NAVAGATION BAR*/}
-        <Nav />
-
-        <br/>
-
-        <Container>
-          <Row>
-
-            {/* Create New Task */}
-            <Col>
-              <NewTask />
-            </Col>
-        
-            {/* List of Current tasks */}
-            <Col>
-              <p className="tasks_title">Tasks</p>
-              <Table striped>
-                <thead>
-                  <tr className="tasks_chart">
-                    <th> Title </th>
-                    <th> Date </th>
-                    <th> Duration </th>
-                    <th> Interest </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.tasks.map( c =>
-                    <tr className="tasks_chart" key={c.id}>
-                      <td>{c.title}</td>
-                      <td>{c.due_date}</td>
-                      <td>{c.duration}</td>
-                      <td>{c.interest}</td>
-                    </tr>)}
-                </tbody>
-              </Table>
-            </Col>
-  
-          </Row>
-        </Container>
-        
+function App(){
+  return(
+    <Router>
+      <div >
+            
+        <Switch>
+        <Route path="/" exact component={Loginpage} />
+        <Route path="/landing" component={Landing} />
+        <Route path="/tasks" component={Tasks} />
+        </Switch>
       </div>
-    );
-  }
-  
+    </Router>
+  )
 }
 
 export default App;

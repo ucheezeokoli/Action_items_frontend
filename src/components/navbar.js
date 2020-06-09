@@ -8,7 +8,7 @@ class Nav extends Component {
         return (
 
             <Navbar bg="dark" variant="dark">
-                <Navbar.Brand href="#home">
+                <Navbar.Brand href="/landing">
                     <img
                         alt=""
                         src={logo}
