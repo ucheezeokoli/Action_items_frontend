@@ -11,16 +11,16 @@ class UserAuth extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            username: '',
-            password: '',
-        };
-
+        // bind functions to access form refs
         this.log_in = this.log_in.bind(this);
         this.log_out = this.log_out.bind(this);
         this.handle_login = this.handle_login.bind(this);
     }
 
+    // authenticate supplied credentials by making a request to database.
+    // if succesful, save TOKEN and update username of parent prop.
+    // else return alert user of error
+    // **Dev** Add more specific return messages? Refer to signup 
     handle_login = () => {
         axios({
             method: 'post',
@@ -40,6 +40,9 @@ class UserAuth extends Component {
         }).catch(() => alert("trouble!"))
     }
 
+    // attempt to create new user with database with supplied credentials.
+    // on success, same as login.
+    // else alert user of specific error(s).
     handle_signup = () => {
         axios({
             method: 'post',
@@ -73,6 +76,7 @@ class UserAuth extends Component {
         })
     };
     
+    // Basic login/signup form
     log_in(){
         return(
             <Form>
@@ -94,12 +98,14 @@ class UserAuth extends Component {
         )
     }
 
+    // logout button
     log_out() {
         return(
             <Button onClick={this.props.handle_logout}>Exit</Button>
         )
     }
 
+    // depending on state of parent authentication prop, return corresponding page. 
     render(){
         return(this.props.auth ? this.log_out() : this.log_in())
     }

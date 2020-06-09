@@ -3,6 +3,8 @@ const API_URL = 'http://localhost:8000';
 
 export default class TasksView{
 
+    // Request tasks from database
+    // **Dev** Supply TOKEN for authentication, and to get specific user's task(s)
     getTasks() {
         const dest = `${API_URL}/api/tasks/`;
         var token = localStorage.getItem('token');
@@ -15,6 +17,8 @@ export default class TasksView{
         .then(response => response.data);
     }
 
+    // Same as getTasks().
+    // **Backend Dev** resolve supplied token with user and create new task linked to user.
     createTask(task) {
         const dest = `${API_URL}/api/tasks/`;
         var token = localStorage.getItem('token');

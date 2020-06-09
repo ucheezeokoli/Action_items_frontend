@@ -27,12 +27,15 @@ class App extends Component {
     super(props);
 
     this.state = {
-      auth: false,
-      username: '',
+      auth: false, // authentication state
+      username: '', // currently authenticated user
     };
 
   }
 
+  // Upon entering page, check local storage if there is a TOKEN
+  // if true, set state to logged in and fetch username
+  // else set state to logged out.
   componentDidMount() {
     var curr_token = localStorage.getItem('token');
     if (curr_token === null || curr_token === 'undefined'){
@@ -58,6 +61,7 @@ class App extends Component {
     }
   }
 
+  // Asynchronously update username and authentication state
   updateUser = (val) => {
     this.setState({
       auth: true,
@@ -65,6 +69,7 @@ class App extends Component {
     })
   }
 
+  // Remove TOKEN from local storage, and update state to reflect log out.
   handle_logout = () => {
     localStorage.removeItem('token');
     this.setState({ auth: false, username: '' });
@@ -84,6 +89,7 @@ class App extends Component {
       </div>
     </Router>
 
+      /*! Test implementation, kept for reference. !*/
       // <div className="App">
       //   <header className="App-header">
       //     <img src={logo} className="App-logo" alt="logo" />

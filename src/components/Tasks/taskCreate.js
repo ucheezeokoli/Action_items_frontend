@@ -17,7 +17,7 @@ class NewTask extends Component {
         this.addTask = this.addTask.bind(this);
     }
 
-    // build task, then attempt to create
+    // refer to taskAPI.js
     addTask() {
         tasksAPI.createTask(
             {
@@ -32,8 +32,6 @@ class NewTask extends Component {
                 alert("There was an error, Please re-check your form.");
             });
     }
-
-    /* !! Make forms with 'ref', don't know other ways to grab them, right now the first form has a ref='title' !! */
 
     render() {
         return (
