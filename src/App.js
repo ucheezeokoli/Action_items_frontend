@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import logo from './flip-flip-blk.svg';
-import './App.css';
+import logo from './assets/flip-flip-blk.svg';
+import './css/App.css';
 
 // Bootstrap
 import Container from 'react-bootstrap/Container';
@@ -12,6 +12,14 @@ import Button from 'react-bootstrap/Button';
 import UserAuth from './components/Users/userAuth';
 import ShowTask from './components/Tasks/taskDisplay';
 import NewTask from './components/Tasks/taskCreate';
+
+import Home from './components/Tasks/Home';
+import Loginpage from './components/Users/Loginpage';
+import Edit from './components/Tasks/Edit';
+import Landing from './components/Tasks/LandingPage';
+import Tasks from './components/Tasks/ViewTasks';
+
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 class App extends Component {
   
@@ -64,40 +72,52 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-        </header>
-        <h1 className="title">Action Items</h1>
-        <br/>
-          {this.state.auth ? 
-          <Container>
-            <Row>
-              Hi {this.state.username}
-            </Row>
 
-            <Row>
-              <Col>
-                <NewTask user={this.state.username}/>
-              </Col>
-              <Col>
-                <ShowTask user={this.state.username}/>
-              </Col>
-              <Button onClick={this.handle_logout}>Sign Out</Button>
-            </Row>
-          </Container>
-          :
-          <Container>
-            <Row> 
-              <UserAuth 
-                auth={this.state.auth}
-                handle_login={this.handle_login}
-                handle_logout={this.handle_logout}
-                updateUser={this.updateUser}/>
-            </Row>
-          </Container>
-          }
+      <Router>
+      <div >
+            
+        <Switch>
+        <Route path="/" exact component={Loginpage} />
+        <Route path="/landing" component={Landing} />
+        <Route path="/tasks" component={Tasks} />
+        </Switch>
       </div>
+    </Router>
+
+      // <div className="App">
+      //   <header className="App-header">
+      //     <img src={logo} className="App-logo" alt="logo" />
+      //   </header>
+      //   <h1 className="title">Action Items</h1>
+      //   <br/>
+      //     {this.state.auth ? 
+      //     <Container>
+      //       <Row>
+      //         Hi {this.state.username}
+      //       </Row>
+
+      //       <Row>
+      //         <Col>
+      //           <NewTask user={this.state.username}/>
+      //         </Col>
+      //         <Col>
+      //           <ShowTask user={this.state.username}/>
+      //         </Col>
+      //         <Button onClick={this.handle_logout}>Sign Out</Button>
+      //       </Row>
+      //     </Container>
+      //     :
+      //     <Container>
+      //       <Row> 
+      //         <UserAuth 
+      //           auth={this.state.auth}
+      //           handle_login={this.handle_login}
+      //           handle_logout={this.handle_logout}
+      //           updateUser={this.updateUser}/>
+      //       </Row>
+      //     </Container>
+      //     }
+      // </div>
     );
   }
   
