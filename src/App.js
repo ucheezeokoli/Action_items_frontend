@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import logo from './assets/flip-flip-blk.svg';
 import './css/App.css';
 
@@ -22,7 +22,7 @@ import Tasks from './components/Tasks/ViewTasks';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 class App extends Component {
-  
+
   constructor(props) {
     super(props);
 
@@ -38,26 +38,26 @@ class App extends Component {
   // else set state to logged out.
   componentDidMount() {
     var curr_token = localStorage.getItem('token');
-    if (curr_token === null || curr_token === 'undefined'){
+    if (curr_token === null || curr_token === 'undefined') {
       this.state.auth = false;
     }
-    else{ 
+    else {
       console.log("setting")
       this.state.auth = true;
     }
 
     // retrieve user from token
-    if(this.state.auth) {
+    if (this.state.auth) {
       fetch('http://localhost:8000/users/current_user/', {
         headers: {
           'Authorization': `JWT ${localStorage.getItem('token')}`
         }
       })
-      .then(res => res.json())
-      .then(json => {
-        console.log(json.username);
-        this.setState({username: json.username});
-      });
+        .then(res => res.json())
+        .then(json => {
+          console.log(json.username);
+          this.setState({ username: json.username });
+        });
     }
   }
 
@@ -79,15 +79,13 @@ class App extends Component {
     return (
 
       <Router>
-      <div >
-            
+
         <Switch>
-        <Route path="/" exact component={Loginpage} />
-        <Route path="/landing" component={Landing} />
-        <Route path="/tasks" component={Tasks} />
+          <Route path="/" exact component={() => (<Home auth={this.state.auth} updateUser={this.updateUser} handle_logout={this.handle_logout}/>)} />
+          <Route path="/landing" component={Landing} />
+          <Route path="/tasks" component={Tasks} />
         </Switch>
-      </div>
-    </Router>
+      </Router>
 
       /*! Test implementation, kept for reference. !*/
       // <div className="App">
@@ -126,7 +124,7 @@ class App extends Component {
       // </div>
     );
   }
-  
+
 }
 
 export default App;

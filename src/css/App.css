@@ -23,8 +23,9 @@
 .auth{ 
   position: relative;
   top: 25%;
-  left: 45%;
-  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 15%;
   color: White;
 }
 
@@ -47,7 +48,7 @@
 
 .landingIntro{
   position: relative;
-  left:45%;
+  left:40%;
   display: inline-block;
   color: white;
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Login from './Login';
 import logo from './../../assets/flip-flip-blk.svg';
+import UserAuth from './userAuth';
 
 import './../../css/App.css';
 
@@ -20,6 +21,7 @@ class Loginpage extends Component {
                         height="80"
                         className="loginLogo"
                     />
+                    {/* <UserAuth /> */}
                 <Login />
             </div>
         );
