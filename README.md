@@ -61,3 +61,16 @@ To use [icons][icons_source] in react as components run the following command
 [node_source]: https://nodejs.org/en/download/
 [bootstrap_source]: https://react-bootstrap.github.io/getting-started/introduction
 [icons_source]: https://material-ui.com/components/icons/
+
+curl --header "Content-Type: application/json" -X POST http://127.0.0.1:8000/users/token/obtain/ --data '{"username":"hoa","password":"pass"}'
+
+
+$ curl --header "Content-Type: application/json" -X POST http://127.0.0.1:8000/users/token/refresh/ --data '{"refresh":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTU5MjExMDAxMCwianRpIjoiNTgxNmU5MzE3NTcwNGFkNTg3ZWQ3NjkzOGFkODIxN2MiLCJ1c2VyX2lkIjoxfQ.F3_cYZb65DHz6Bt7uG8-dY5eozFy9RU5KtvSBoInyK8"}'
+
+curl --header "Content-Type: application/json" -X POST http://127.0.0.1:8000/users/token/create/ --data '{"username":"u1","password":"konnichiwa"}'
+
+curl --header "Content-Type: application/json" --header "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTkyMDI4Nzk1LCJqdGkiOiIwODEwMTEyNWRiMTc0MzU1OTFlZDY0N2I3ODNiYmUyZSIsInVzZXJfaWQiOjEsInVzZXJuYW1lIjoiaG9hIn0.wH3VB4VLLSowMlt04w8oKihoUea0QhmHEu_dpj8PB_s" -X GET http://127.0.0.1:8000/api/tasks/
+
+curl --header "Content-Type: application/json" --header "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTkyMDI4NzE1LCJqdGkiOiI1NjAwNGY1NmI1ZWY0NWU5OTVhZWU4ZmFmOTE4NWVmZSIsInVzZXJfaWQiOjEsInVzZXJuYW1lIjoiaG9hIn0.8kMdiMZW6WI41N5oGzSQt2uH6Ws36LLOiGilI7S_7Cg"-X POST http://127.0.0.1:8000/api/tasks/ --data '{"title":"r_t1","due_date":"r_dd1","duration":"r_d1","interest":"5"}'
+
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTkyMDI4NTk3LCJqdGkiOiJjMDBhNjNlOGY4NzY0ZTU3OTU0ZTNiZTRiMDg2NjUyNCIsInVzZXJfaWQiOjEsInVzZXJuYW1lIjoiaG9hIn0.r6EsYoWXxjRiITjMXzNOad_n9ZGjZ02UeY8ZxxUX4CE

@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 
 import { Link } from 'react-router-dom';
 
+import Tasks from './ViewTasks'
 
 
 
@@ -82,6 +83,7 @@ class Landing extends Component {
                     </Link> */}
                 </Modal>
 
+                <Tasks/>
             </div>
         )
     }

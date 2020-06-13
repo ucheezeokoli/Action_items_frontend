@@ -28,7 +28,7 @@ class Loginpage extends Component {
     handle_login = () => {
         axios({
             method: 'post',
-            url: `${API_AUTH_URL}/token-auth/`,
+            url: `${API_AUTH_URL}/users/token/obtain/`,
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -38,10 +38,11 @@ class Loginpage extends Component {
             }
         })
             .then(res => {
-                console.log(res.data);
-                localStorage.setItem('token', res.data.token);
-                this.props.updateUser(res.data.user.username);
-            }).catch((err) => alert('Trouble with login\n' + err))
+                //console.log(res)
+                localStorage.setItem('refresh_token', res.data.refresh)
+                localStorage.setItem('access_token', res.data.access)
+                this.props.updateUser(res.config.data.username);
+            }).catch((err) => alert('Trouble with login\n' + 'Check username and password'))
     }
 
     // attempt to create new user with database with supplied credentials.
