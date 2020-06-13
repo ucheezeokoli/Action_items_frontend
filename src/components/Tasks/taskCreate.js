@@ -76,7 +76,7 @@ class NewTask extends Component {
                     <Form.Group>
                         <Button variant="primary" size="lg" block onClick={this.addTask}>
                             Create
-                        </Button>                  
+                        </Button>
                     </Form.Group>
                 </Form>
             </div>

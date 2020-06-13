@@ -18,7 +18,7 @@ import Loginpage from './components/Users/Loginpage';
 import Edit from './components/Tasks/Edit';
 import Landing from './components/Tasks/LandingPage';
 import Tasks from './components/Tasks/ViewTasks';
-
+import user_api from './components/axios_api';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 class App extends Component {
@@ -37,7 +37,7 @@ class App extends Component {
   // if true, set state to logged in and fetch username
   // else set state to logged out.
   componentDidMount() {
-    var curr_token = localStorage.getItem('token');
+    var curr_token = localStorage.getItem('refresh_token');
     if (curr_token === null || curr_token === 'undefined') {
       this.state.auth = false;
     }
@@ -46,17 +46,25 @@ class App extends Component {
       this.state.auth = true;
     }
 
-    // retrieve user from token
+    // request token refresh, and acquire username
     if (this.state.auth) {
-      fetch('http://localhost:8000/users/current_user/', {
-        headers: {
-          'Authorization': `JWT ${localStorage.getItem('token')}`
-        }
+      user_api.post('users/token/verify/', {
+        token: localStorage.getItem('refresh_token'),
       })
-        .then(res => res.json())
-        .then(json => {
-          console.log(json.username);
-          this.setState({ username: json.username });
+        .then((response) => {
+          // save new tokens
+          // localStorage.setItem('access_token', response.data.access);
+          // localStorage.setItem('refresh_token', response.data.refresh);
+          
+          // update headers
+          // user_api.defaults.headers['Authorization'] = "JWT" + response.data.access;
+
+          // save username
+          //console.log(response);
+          this.updateUser('some user');
+        })
+        .catch(err => {
+            console.log(err)
         });
     }
   }
@@ -69,10 +77,18 @@ class App extends Component {
     })
   }
 
-  // Remove TOKEN from local storage, and update state to reflect log out.
+  // request server to blacklist token, then remove tokens from localStorage and update state.
   handle_logout = () => {
-    localStorage.removeItem('token');
-    this.setState({ auth: false, username: '' });
+    user_api.post('users/token/blacklist/', {"refresh_token":localStorage.getItem("refresh_token")})
+      .then(() => {
+        localStorage.removeItem('refresh_token');
+        localStorage.removeItem('access_token');
+        user_api.defaults.headers['Authorization'] = null;
+        this.setState({ auth: false, username: '' });
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   };
 
   render() {

@@ -9,7 +9,9 @@ import Col from 'react-bootstrap/Col';
 
 import './../../css/App.css';
 
+import user_api from './../axios_api';
 const API_AUTH_URL = 'http://localhost:8000';
+
 
 class Loginpage extends Component {
 
@@ -43,6 +45,23 @@ class Loginpage extends Component {
                 localStorage.setItem('access_token', res.data.access)
                 this.props.updateUser(res.config.data.username);
             }).catch((err) => alert('Trouble with login\n' + 'Check username and password'))
+    }
+
+    axios_login = () => {
+        user_api.post('users/token/obtain/', {
+            username: this.refs.username.value,
+            password: this.refs.password.value,
+        })
+        .then(response => {
+            console.log(response);
+            this.props.updateUser(response.config.data.username);
+            user_api.defaults.headers['Authorization'] = "JWT " + response.data.access;
+            localStorage.setItem('access_token', response.data.access);
+            localStorage.setItem('refresh_token', response.data.refresh);
+        })
+        .catch(error => {
+            console.log(error);
+        })
     }
 
     // attempt to create new user with database with supplied credentials.
@@ -80,6 +99,16 @@ class Loginpage extends Component {
             })
     };
 
+    axios_signup = () => {
+        user_api.post('users/token/create/', {
+            username: this.refs.username.value,
+            password: this.refs.password.value,
+        }).then(alert('user successfully created'))
+        .catch((error) => {
+            console.log(error.stack);
+        });
+    }
+
     render() {
         return (
             <div className="logpage">
@@ -114,12 +143,12 @@ class Loginpage extends Component {
                         <Form.Group>
                             <Row>
                                 <Col>
-                                    <Button variant="primary" block onClick={this.handle_login} >
+                                    <Button variant="primary" block onClick={this.axios_login} >
                                         Login
                                     </Button>{'  '}
                                 </Col>
                                 <Col>
-                                    <Button variant="outline-dark" block onClick={this.handle_signup}>
+                                    <Button variant="outline-dark" block onClick={this.axios_signup}>
                                         Register
                                     </Button>
                                 </Col>

@@ -71,6 +71,6 @@ curl --header "Content-Type: application/json" -X POST http://127.0.0.1:8000/use
 
 curl --header "Content-Type: application/json" --header "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTkyMDI4Nzk1LCJqdGkiOiIwODEwMTEyNWRiMTc0MzU1OTFlZDY0N2I3ODNiYmUyZSIsInVzZXJfaWQiOjEsInVzZXJuYW1lIjoiaG9hIn0.wH3VB4VLLSowMlt04w8oKihoUea0QhmHEu_dpj8PB_s" -X GET http://127.0.0.1:8000/api/tasks/
 
-curl --header "Content-Type: application/json" --header "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTkyMDI4NzE1LCJqdGkiOiI1NjAwNGY1NmI1ZWY0NWU5OTVhZWU4ZmFmOTE4NWVmZSIsInVzZXJfaWQiOjEsInVzZXJuYW1lIjoiaG9hIn0.8kMdiMZW6WI41N5oGzSQt2uH6Ws36LLOiGilI7S_7Cg"-X POST http://127.0.0.1:8000/api/tasks/ --data '{"title":"r_t1","due_date":"r_dd1","duration":"r_d1","interest":"5"}'
+curl --header "Content-Type: application/json" --header "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTkyMDI4Nzk1LCJqdGkiOiIwODEwMTEyNWRiMTc0MzU1OTFlZDY0N2I3ODNiYmUyZSIsInVzZXJfaWQiOjEsInVzZXJuYW1lIjoiaG9hIn0.wH3VB4VLLSowMlt04w8oKihoUea0QhmHEu_dpj8PB_s" -X POST http://127.0.0.1:8000/api/tasks/ --data '{"title":"r_t1","due_date":"r_dd1","duration":"r_d1","interest":"5"}'
 
 eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTkyMDI4NTk3LCJqdGkiOiJjMDBhNjNlOGY4NzY0ZTU3OTU0ZTNiZTRiMDg2NjUyNCIsInVzZXJfaWQiOjEsInVzZXJuYW1lIjoiaG9hIn0.r6EsYoWXxjRiITjMXzNOad_n9ZGjZ02UeY8ZxxUX4CE

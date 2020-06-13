@@ -6,8 +6,10 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
 import { Link } from 'react-router-dom';
-
-import Tasks from './ViewTasks'
+import user_api from './../axios_api';
+import Tasks from './ViewTasks';
+import TasksView from './taskAPI';
+const tasksAPI = new TasksView();
 
 
 
@@ -18,6 +20,25 @@ class Landing extends Component {
             createWindowShow: false
         };
     }
+
+    // refer to taskAPI.js
+    addTask = () => {
+        user_api.post('api/tasks/', {
+            title: 't1',
+            due_date: 'dd1',
+            duration: 'd1',
+            interest: 4,
+        })
+        .then((result) => {
+            console.log(result);
+            alert("Task Created!");
+        })
+        .catch((error) => {
+            alert("There was an error creating task.")
+            console.log(error)
+        })
+    }
+
     render() {
         let createWindowClose = () => this.setState({ createWindowShow: false });
         return (
@@ -26,7 +47,6 @@ class Landing extends Component {
 
                 {/*! New Log Out Button, the onClick prop calls a function passed down App.js !*/}
                 <Button onClick={this.props.handle_logout}>Log Oot</Button>
-                
                 
                 <br />
                 <div className="landingIntro"><h1 >Welcome User</h1>
@@ -70,17 +90,16 @@ class Landing extends Component {
                         </Form>
 
                     </Modal.Body>
-                    {/* <Link to="/tasks">
                     <Modal.Footer>
 
                         
-                            <Button variant="primary" size="lg" block onClick={() => this.setState({ createWindowShow: false })}>
+                            {/* <Button variant="primary" size="lg" block onClick={() => this.setState({ createWindowShow: false })}>
                             Add to tasks
-                            </Button>
+                            </Button> */}
                            
+                           <Button onClick={this.addTask}>Add Task</Button>
                        
                     </Modal.Footer>
-                    </Link> */}
                 </Modal>
 
                 <Tasks/>
