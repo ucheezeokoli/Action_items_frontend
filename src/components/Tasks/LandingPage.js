@@ -22,15 +22,20 @@ class Landing extends Component {
         return (
             <div className="landing">
                 <Nav />
+
+                {/*! New Log Out Button, the onClick prop calls a function passed down App.js !*/}
+                <Button onClick={this.props.handle_logout}>Log Oot</Button>
+                
+                
                 <br />
                 <div className="landingIntro"><h1 >Welcome User</h1>
                     <br />
                     <Button variant="dark" onClick={() => this.setState({ createWindowShow: true })}>Create new task</Button>
-                    <Link to="/tasks">
+                    {/* <Link to="/tasks">
                         <Button variant="light">
                             View tasks
                         </Button>
-                    </Link>
+                    </Link> */}
 
                 </div>
 
@@ -64,7 +69,7 @@ class Landing extends Component {
                         </Form>
 
                     </Modal.Body>
-                    <Link to="/tasks">
+                    {/* <Link to="/tasks">
                     <Modal.Footer>
 
                         
@@ -72,11 +77,9 @@ class Landing extends Component {
                             Add to tasks
                             </Button>
                            
-                        {/* <Button variant="primary" onClick={()=> this.setState({editWindowShow: false})}>
-                            Save Changes
-                        </Button> */}
+                       
                     </Modal.Footer>
-                    </Link>
+                    </Link> */}
                 </Modal>
 
             </div>
@@ -84,3 +87,7 @@ class Landing extends Component {
     }
 }
 export default Landing;
+
+ {/* <Button variant="primary" onClick={()=> this.setState({editWindowShow: false})}>
+                            Save Changes
+                        </Button> */}

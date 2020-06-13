@@ -78,14 +78,37 @@ class App extends Component {
   render() {
     return (
 
-      <Router>
+      /*! 
+      Changed to if statement to decide which page to render (login or landing) 
+      As of right now, the updateUser function is only passed down one level,
+        which means that <Loginpage> has been combined with <Login>, i.e. everything that was in <Login> has been moved.
+      I think this is a temporary solution, would be cool to find a way to pass props down more than one level. 
+      !*/ 
+      <div>
+        {this.state.auth ? 
+          <Landing handle_logout={this.handle_logout}/>
+          :
+          <Loginpage updateUser={this.updateUser}/> 
+        }
+      </div>
+      
 
-        <Switch>
-          <Route path="/" exact component={() => (<Home auth={this.state.auth} updateUser={this.updateUser} handle_logout={this.handle_logout}/>)} />
-          <Route path="/landing" component={Landing} />
-          <Route path="/tasks" component={Tasks} />
-        </Switch>
-      </Router>
+
+    );
+  }
+
+}
+
+export default App;
+
+      // <Router>
+
+      //   <Switch>
+      //     <Route path="/" exact component={() => (<Home auth={this.state.auth} updateUser={this.updateUser} handle_logout={this.handle_logout}/>)} />
+      //     <Route path="/landing" component={Landing} />
+      //     <Route path="/tasks" component={Tasks} />
+      //   </Switch>
+      // </Router>
 
       /*! Test implementation, kept for reference. !*/
       // <div className="App">
@@ -122,9 +145,3 @@ class App extends Component {
       //     </Container>
       //     }
       // </div>
-    );
-  }
-
-}
-
-export default App;
