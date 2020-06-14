@@ -4,11 +4,10 @@ const API_URL = 'http://localhost:8000';
 /*!
     Moved from api class that wraps axios functions to an axios instance 
     This is to allow the use of axios interceptor, which is used to automatically refresh tokens.
-    May need two different instances since there are different base urls,
-        could also just make the base url API_URL, and add the route... (currently trying)
 !*/
 
 // Axios Instance with authorization header
+// used to make authorized requests to database.
 const user_api = axios.create({
     baseURL: `${API_URL}/`,
     timeout: 5000,
@@ -23,46 +22,51 @@ const user_api = axios.create({
 //  this will make a new request with a refreshed token
 user_api.interceptors.response.use(response => response, 
     error => {
+
+        // save original request to try again later
         let original_request = error.config;
         
-        // console.log(error.response.status)
-        // Prevent infinite loops
-        if (error.response.status == 401 && original_request.url == API_URL+"/users/token/refresh") {
+        // Prevent infinite loops: If token refresh failed.
+        if (error.response.status === 401 && original_request.url == API_URL+"/users/token/refresh") {
             return Promise.reject(error);
         }
         
-        // catch the error, thrown by expired token
+        // Catch expired token, attemp to refresh
         if (error.response.data.code === "token_not_valid" && 
-            error.response.status == 401 && 
-            error.response.statusText == "Unauthorized"
+            error.response.status === 401 && 
+            error.response.statusText === "Unauthorized"
             ) {
 
+                // Grab current refresh token
                 const refresh_token = localStorage.getItem('refresh_token');
                 if (refresh_token) {
+
+                    // Grab refresh token expiration
                     const tokenParts = JSON.parse(atob(refresh_token.split('.')[1]));
-
                     const now = Math.ceil(Date.now() / 1000);
-                    console.log(tokenParts.exp);
+                    console.log("Token Refresh : Expiration : " + tokenParts.exp);
 
+                    // If not expired, attempt to refresh.
                     if (tokenParts.exp > now) {
                         return user_api.post('users/token/refresh/', {refresh: refresh_token})
                             .then((response) => {
 
+                                // Save tokens and update headers
                                 localStorage.setItem('access_token', response.data.access);
                                 localStorage.setItem('refresh_token', response.data.refresh);
-                
                                 user_api.defaults.headers['Authorization'] = "JWT " + response.data.access;
                                 original_request.headers['Authorization'] = "JWT " + response.data.access;
-                
+                                
+                                // Try original request
                                 return user_api(original_request);
                             })
                             .catch(err => {
-                                console.log(err)
+                                console.log("Token Refresh: Attempt failed.\n" + err)
                             })
                     }
 
                     else {
-                        console.log("Refresh token is expired", tokenParts.exp, now)
+                        console.log("Token Refresh: Refresh token expired", tokenParts.exp, now)
                     }
                 }
 

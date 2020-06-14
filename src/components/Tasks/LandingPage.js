@@ -21,7 +21,10 @@ class Landing extends Component {
         };
     }
 
-    // refer to taskAPI.js
+    // Attempt to create a new task in database
+    // authenticated and related to current user through token.
+    // *Dev* Take in correct inputs from forms. (backend needs to update schema/model)
+    // *Dev* Update/Edit tasks still needs backend support.
     addTask = () => {
         user_api.post('api/tasks/', {
             title: 't1',

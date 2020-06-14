@@ -1,112 +1,87 @@
 import React, { Component } from 'react';
 import logo from './../../assets/flip-flip-blk.svg';
-import axios from 'axios';
+import './../../css/App.css';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import './../../css/App.css';
-
 import user_api from './../axios_api';
-const API_AUTH_URL = 'http://localhost:8000';
 
 
 class Loginpage extends Component {
 
     constructor (props) {
-        super(props);
-
-        // bind functions to access form refs
-        this.handle_login = this.handle_login.bind(this);
-        this.handle_signup = this.handle_signup.bind(this);        
+        super(props);    
     }
 
     // authenticate supplied credentials by making a request to database.
     // if succesful, save TOKEN and update username of parent prop.
     // else return alert user of error
     // **Dev** Add more specific return messages? Refer to signup 
-    handle_login = () => {
-        axios({
-            method: 'post',
-            url: `${API_AUTH_URL}/users/token/obtain/`,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            data: {
-                username: this.refs.username.value,
-                password: this.refs.password.value,
-            }
-        })
-            .then(res => {
-                //console.log(res)
-                localStorage.setItem('refresh_token', res.data.refresh)
-                localStorage.setItem('access_token', res.data.access)
-                this.props.updateUser(res.config.data.username);
-            }).catch((err) => alert('Trouble with login\n' + 'Check username and password'))
-    }
-
     axios_login = () => {
         user_api.post('users/token/obtain/', {
             username: this.refs.username.value,
             password: this.refs.password.value,
         })
         .then(response => {
-            console.log(response);
-            this.props.updateUser(response.config.data.username);
+            this.props.updateUser("some user");
             user_api.defaults.headers['Authorization'] = "JWT " + response.data.access;
             localStorage.setItem('access_token', response.data.access);
             localStorage.setItem('refresh_token', response.data.refresh);
         })
         .catch(error => {
-            console.log(error);
+            let error_msg = "Log in error...\n"
+            if (error.response.statusText === "Bad Request") {
+                if (error.response.data.username) {
+                    for (let x in error.response.data.username) {
+                        error_msg += "username: " + error.response.data.username[x] + "\n";
+                    }
+                }
+                if (error.response.data.password) {
+                    for (let x in error.response.data.password) {
+                        error_msg += "password: " + error.response.data.password[x] + "\n";
+                    }
+                }
+            }
+
+            if (error.response.status === 401) {
+                error_msg += error.response.data.detail
+            }
+            alert(error_msg)
         })
     }
 
-    // attempt to create new user with database with supplied credentials.
-    // on success, same as login.
-    // else alert user of specific error(s).
-    handle_signup = () => {
-        axios({
-            method: 'post',
-            url: `${API_AUTH_URL}/users/users/`,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            data: {
-                username: this.refs.username.value,
-                password: this.refs.password.value,
-            }
-        })
-            .then(res => {
-                localStorage.setItem('token', res.data.token);
-                this.props.updateUser(res.data.username);
-            }).catch(err => {
-                console.log(err.response);
-                let err_msg = "";
-                if (err.response.data.username) {
-                    for (let x in err.response.data.username) {
-                        err_msg += "username: " + err.response.data.username[x] + "\n";
-                    }
-                }
-                if (err.response.data.password) {
-                    for (let x in err.response.data.password) {
-                        err_msg += "password: " + err.response.data.password[x] + "\n";
-                    }
-                }
-                alert(err_msg);
-            })
-    };
-
+    // Attempt to create new user in database with supplied credentials.
+    // *Dev* improvements to UX?
     axios_signup = () => {
         user_api.post('users/token/create/', {
             username: this.refs.username.value,
             password: this.refs.password.value,
-        }).then(alert('user successfully created'))
+        })
         .catch((error) => {
-            console.log(error.stack);
-        });
+            console.log(error.response)
+            let error_msg = "";
+            if (error.response.data.username) {
+                for (let x in error.response.data.username) {
+                    error_msg += "username: " + error.response.data.username[x] + "\n";
+                }
+            }
+            if (error.response.data.password) {
+                for (let x in error.response.data.password) {
+                    error_msg += "password: " + error.response.data.password[x] + "\n";
+                }
+            }
+            // *Dev* Better handling and error message.
+            if (error.response.status === 500) error_msg += "Try a different username/password\n"
+            alert(error_msg);
+        })
+        .then((response) => {
+            if (response && response.statusText === "Created") {
+                alert("User successfully created!")
+            }
+        })
     }
 
     render() {

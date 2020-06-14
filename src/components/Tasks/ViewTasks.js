@@ -37,7 +37,7 @@ class Tasks extends Component{
 
      // grab tasks from database
      /*! 
-     Currently doesn't work on first load, probably because the acces token isn't save yet?
+     Currently doesn't work on first load, probably because the acces token isn't saved yet?
      Maybe add a 'refresh list' button that makes a manual get request...
      !*/
      componentDidMount() {
