@@ -16,7 +16,7 @@ import NewTask from './components/Tasks/taskCreate';
 import Home from './components/Tasks/Home';
 import Loginpage from './components/Users/Loginpage';
 import Edit from './components/Tasks/Edit';
-import Landing from './components/Tasks/LandingPage';
+import LandingPage from './components/Tasks/LandingPage';
 import Tasks from './components/Tasks/ViewTasks';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -86,7 +86,7 @@ class App extends Component {
       !*/ 
       <div>
         {this.state.auth ? 
-          <Landing handle_logout={this.handle_logout}/>
+          <LandingPage handle_logout={this.handle_logout}/>
           :
           <Loginpage updateUser={this.updateUser}/> 
         }

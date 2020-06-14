@@ -46,10 +46,11 @@ class Tasks extends Component{
     render(){
         let editWindowClose = () => this.setState({ editWindowShow: false });
         return( 
-            <div className="taskLayout">
-                <Nav />
+            <div className="tasks">
                 <br />
-                 <Container>
+
+                <div className="taskLayout">
+                <Container>
                     <Row>
 
                         {/* List of Current tasks */}
@@ -86,6 +87,8 @@ class Tasks extends Component{
 
                     </Row>
                 </Container>
+                </div>
+                
 
                 <Modal {...this.props} show={this.state.editWindowShow} onHide={editWindowClose}>
                     <Modal.Header closeButton>
