@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './../../css/App.css';
+import './../../css/bootstrap.css';
 import Nav from './../navbar';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -13,7 +14,7 @@ const tasksAPI = new TasksView();
 
 
 
-class Landing extends Component {
+class LandingPage extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -49,12 +50,14 @@ class Landing extends Component {
                 <Nav />
 
                 {/*! New Log Out Button, the onClick prop calls a function passed down App.js !*/}
-                <Button onClick={this.props.handle_logout}>Log Oot</Button>
+                <div className="logout">
+                    <Button variant="warning" onClick={this.props.handle_logout}>Log Out</Button>
+                </div>
                 
                 <br />
                 <div className="landingIntro"><h1 >Welcome User</h1>
                     <br />
-                    <Button variant="dark" onClick={() => this.setState({ createWindowShow: true })}>Create new task</Button>
+                    <Button block variant="dark" onClick={() => this.setState({ createWindowShow: true })}>Create New Task</Button>
                     {/* <Link to="/tasks">
                         <Button variant="light">
                             View tasks
@@ -63,7 +66,8 @@ class Landing extends Component {
 
                 </div>
 
-                <Modal {...this.props} show={this.state.createWindowShow} onHide={createWindowClose}>
+
+                <Modal className="modal-backdrop" {...this.props} show={this.state.createWindowShow} onHide={createWindowClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Create task </Modal.Title>
                     </Modal.Header>
@@ -110,7 +114,7 @@ class Landing extends Component {
         )
     }
 }
-export default Landing;
+export default LandingPage;
 
  {/* <Button variant="primary" onClick={()=> this.setState({editWindowShow: false})}>
                             Save Changes

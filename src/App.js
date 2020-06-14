@@ -3,7 +3,9 @@ import './css/App.css';
 
 // Child Components
 import Loginpage from './components/Users/Loginpage';
+
 import Landing from './components/Tasks/LandingPage';
+
 
 // database api
 import user_api from './components/axios_api';
@@ -75,7 +77,7 @@ class App extends Component {
     return (
       <div>
         {this.state.auth ? 
-          <Landing handle_logout={this.handle_logout}/>
+          <LandingPage handle_logout={this.handle_logout}/>
           :
           <Loginpage updateUser={this.updateUser}/> 
         }
