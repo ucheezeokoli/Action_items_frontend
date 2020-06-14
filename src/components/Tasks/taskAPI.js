@@ -15,7 +15,6 @@ export default class TasksView{
             headers: {'Authorization' : `JWT ${token}`},
         })
         .then(response => response.data)
-        
     }
 
     // Same as getTasks().

@@ -4,6 +4,7 @@ import './../../css/App.css';
 import NewTask from './taskCreate';
 import TasksView from './taskAPI';
 import Nav from './../navbar';
+import user_api from './../axios_api';
 
 
 //FROM BOOTSTRAP
@@ -35,11 +36,18 @@ class Tasks extends Component{
     }
 
      // grab tasks from database
+     /*! 
+     Currently doesn't work on first load, probably because the acces token isn't saved yet?
+     Maybe add a 'refresh list' button that makes a manual get request...
+     !*/
      componentDidMount() {
-        var self = this;
-        tasksAPI.getTasks().then(function (result) {
-            console.log(result);
-            self.setState({ tasks: result.data })
+        user_api.get('api/tasks/')
+        .then((response) => {
+            // console.log(response.data.data);
+            this.setState({tasks: response.data.data})
+        })
+        .catch((error) => {
+            console.log(error);
         });
     }
 
