@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import CreateSharpIcon from '@material-ui/icons/CreateSharp';
-
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 

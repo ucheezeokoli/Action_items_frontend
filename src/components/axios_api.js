@@ -27,7 +27,7 @@ user_api.interceptors.response.use(response => response,
         let original_request = error.config;
         
         // Prevent infinite loops: If token refresh failed.
-        if (error.response.status === 401 && original_request.url == API_URL+"/users/token/refresh") {
+        if (error.response.status === 401 && original_request.url === API_URL+"/users/token/refresh") {
             return Promise.reject(error);
         }
         

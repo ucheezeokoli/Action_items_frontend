@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import './../../css/App.css';
 
-import NewTask from './taskCreate';
-import TasksView from './taskAPI';
-import Nav from './../navbar';
 import user_api from './../axios_api';
 
 
@@ -20,10 +17,6 @@ import Button from 'react-bootstrap/Button';
 //ICONS
 import CreateSharpIcon from '@material-ui/icons/CreateSharp';
 const EditIcon = CreateSharpIcon;
-
-
-const tasksAPI = new TasksView();
-
 
 class Tasks extends Component{
     constructor(props) {

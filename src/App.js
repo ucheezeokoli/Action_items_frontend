@@ -4,7 +4,7 @@ import './css/App.css';
 // Child Components
 import Loginpage from './components/Users/Loginpage';
 
-import Landing from './components/Tasks/LandingPage';
+import LandingPage from './components/Tasks/LandingPage';
 
 
 // database api

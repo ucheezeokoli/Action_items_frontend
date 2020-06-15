@@ -6,13 +6,8 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
-import { Link } from 'react-router-dom';
 import user_api from './../axios_api';
 import Tasks from './ViewTasks';
-import TasksView from './taskAPI';
-const tasksAPI = new TasksView();
-
-
 
 class LandingPage extends Component {
     constructor(props) {
@@ -27,10 +22,15 @@ class LandingPage extends Component {
     // *Dev* Take in correct inputs from forms. (backend needs to update schema/model)
     // *Dev* Update/Edit tasks still needs backend support.
     addTask = () => {
+        console.log(this.refs.title.value)
+        console.log(this.refs.date.value)
+        console.log(this.refs.duration.value)
+        // console.log(this.refs.interest.value)
+        
         user_api.post('api/tasks/', {
-            title: 't1',
-            due_date: 'dd1',
-            duration: 'd1',
+            title: this.refs.title.value,
+            due_date: this.refs.date.value,
+            duration: 3600,
             interest: 4,
         })
         .then((result) => {
@@ -58,12 +58,6 @@ class LandingPage extends Component {
                 <div className="landingIntro"><h1 >Welcome User</h1>
                     <br />
                     <Button block variant="dark" onClick={() => this.setState({ createWindowShow: true })}>Create New Task</Button>
-                    {/* <Link to="/tasks">
-                        <Button variant="light">
-                            View tasks
-                        </Button>
-                    </Link> */}
-
                 </div>
 
 
@@ -79,20 +73,25 @@ class LandingPage extends Component {
                             </Form.Group>
 
                             <Form.Group controlId="">
-                                <Form.Label>Due date</Form.Label>
+                                <Form.Label>Finish By</Form.Label>
                                 <Form.Control type="date" placeholder="Enter due date" ref='date' />
                             </Form.Group>
 
 
                             <Form.Group controlId="">
                                 <Form.Label>Duration</Form.Label>
-                                <Form.Control type="text" placeholder="Enter duration" ref='duration' />
+                                <Form.Control type="duration" placeholder="Enter duration" ref='duration' />
                             </Form.Group>
 
-
-                            <Form.Group controlId="formBasicRange">
-                                <Form.Label>Interest level</Form.Label>
-                                <Form.Control type="range" />
+                            {/* Radios for interest level selection
+                            *Dev* only one can be true, how to grab this input? */}
+                            <Form.Group>
+                                <Form.Label>Interest Level</Form.Label>
+                                <div>
+                                    {[1,2,3,4,5].map((number) => (
+                                        <Form.Check inline type='radio' id={`inline-radio-${number}`} label={number}/>
+                                    ))}
+                                </div>
                             </Form.Group>
                         </Form>
 
@@ -116,6 +115,6 @@ class LandingPage extends Component {
 }
 export default LandingPage;
 
- {/* <Button variant="primary" onClick={()=> this.setState({editWindowShow: false})}>
+ /* <Button variant="primary" onClick={()=> this.setState({editWindowShow: false})}>
                             Save Changes
-                        </Button> */}
+                        </Button> */
