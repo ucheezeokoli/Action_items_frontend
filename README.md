@@ -49,15 +49,29 @@ To use [icons][icons_source] in react as components run the following command
 ```
 
 # Project todo list 
-* Keep README up to date
-* ~~make "edit" button~~ 
-* make "delete button
-* hit enter to create new task
-
-
+* Currently, if a refresh token expires, nothing happens, we neet to quietly log the user out.
+* Clarify all error logs, possible alternative to JS alert()?
+* Decide on file structure, naming scheme, and coding style
+* Dev comments for work in progress items, and regular comments for completed items
+* Start looking at testing tools, things are getting hairy!
 
 
 
 [node_source]: https://nodejs.org/en/download/
 [bootstrap_source]: https://react-bootstrap.github.io/getting-started/introduction
 [icons_source]: https://material-ui.com/components/icons/
+[django_token_source]: https://hackernoon.com/110percent-complete-jwt-authentication-with-django-and-react-2020-iejq34ta
+[simple_jwt_docs]: https://django-rest-framework-simplejwt.readthedocs.io/en/latest/
+
+curl --header "Content-Type: application/json" -X POST http://127.0.0.1:8000/users/token/obtain/ --data '{"username":"hoa","password":"pass"}'
+
+
+$ curl --header "Content-Type: application/json" -X POST http://127.0.0.1:8000/users/token/refresh/ --data '{"refresh":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTU5MjExMDAxMCwianRpIjoiNTgxNmU5MzE3NTcwNGFkNTg3ZWQ3NjkzOGFkODIxN2MiLCJ1c2VyX2lkIjoxfQ.F3_cYZb65DHz6Bt7uG8-dY5eozFy9RU5KtvSBoInyK8"}'
+
+curl --header "Content-Type: application/json" -X POST http://127.0.0.1:8000/users/token/create/ --data '{"username":"u1","password":"konnichiwa"}'
+
+curl --header "Content-Type: application/json" --header "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTkyMDI4Nzk1LCJqdGkiOiIwODEwMTEyNWRiMTc0MzU1OTFlZDY0N2I3ODNiYmUyZSIsInVzZXJfaWQiOjEsInVzZXJuYW1lIjoiaG9hIn0.wH3VB4VLLSowMlt04w8oKihoUea0QhmHEu_dpj8PB_s" -X GET http://127.0.0.1:8000/api/tasks/
+
+curl --header "Content-Type: application/json" --header "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTkyMDI4Nzk1LCJqdGkiOiIwODEwMTEyNWRiMTc0MzU1OTFlZDY0N2I3ODNiYmUyZSIsInVzZXJfaWQiOjEsInVzZXJuYW1lIjoiaG9hIn0.wH3VB4VLLSowMlt04w8oKihoUea0QhmHEu_dpj8PB_s" -X POST http://127.0.0.1:8000/api/tasks/ --data '{"title":"r_t1","due_date":"r_dd1","duration":"r_d1","interest":"5"}'
+
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTkyMDI4NTk3LCJqdGkiOiJjMDBhNjNlOGY4NzY0ZTU3OTU0ZTNiZTRiMDg2NjUyNCIsInVzZXJfaWQiOjEsInVzZXJuYW1lIjoiaG9hIn0.r6EsYoWXxjRiITjMXzNOad_n9ZGjZ02UeY8ZxxUX4CE

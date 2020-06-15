@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from '../flip-flip-blk.svg';
+import logo from './../assets/flip-flip-blk.svg';
 import Navbar from 'react-bootstrap/Navbar'
 
 
