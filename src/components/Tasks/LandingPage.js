@@ -18,19 +18,22 @@ class LandingPage extends Component {
     }
 
     // Attempt to create a new task in database
-    // authenticated and related to current user through token.
-    // *Dev* Take in correct inputs from forms. (backend needs to update schema/model)
-    // *Dev* Update/Edit tasks still needs backend support.
+    // requst is authenticated and new task is related to current user through token.
     addTask = () => {
-        console.log(this.refs.title.value)
-        console.log(this.refs.date.value)
-        console.log(this.refs.duration.value)
-        // console.log(this.refs.interest.value)
+        // date time
+        const d = new Date(this.refs.date.value + " " + this.refs.time.value)
+
+        // duration, measure in seconds
+        const delta = 
+            (parseInt(this.refs.duration_days.value) * 86400) +
+            (parseInt(this.refs.duration_hours.value) * 60) +
+            (parseInt(this.refs.duration_minutes.value)
+        )
         
         user_api.post('api/tasks/', {
             title: this.refs.title.value,
-            due_date: this.refs.date.value,
-            duration: 3600,
+            due_date: d.toJSON(),
+            duration: delta,
             interest: 4,
         })
         .then((result) => {
@@ -39,7 +42,7 @@ class LandingPage extends Component {
         })
         .catch((error) => {
             alert("There was an error creating task.")
-            console.log(error)
+            console.log(error.response)
         })
     }
 
@@ -67,22 +70,43 @@ class LandingPage extends Component {
                     </Modal.Header>
                     <Modal.Body>
                         <Form>
+
+                            {/* Task Title */}
                             <Form.Group >
                                 <Form.Label>Task name</Form.Label>
                                 <Form.Control type="text" placeholder="Enter task name" ref='title' />
                             </Form.Group>
 
+                            {/* Finish Task By */}
                             <Form.Group controlId="">
                                 <Form.Label>Finish By</Form.Label>
-                                <Form.Control type="date" placeholder="Enter due date" ref='date' />
+                                <Form.Control inline type="date" placeholder="Enter due date" ref='date' />
+                                <Form.Control inline type="time" ref="time"/>
                             </Form.Group>
 
+                            {/* Task Duration */}
+                            {/*  
+                                *Dev* 
+                                The max and min are not enforced, user is still allowed to input them
+                                    There is just a small text that shows (not enough)
+                                    CSS validation?
 
+                                can we allow hours to be greater than 24?
+                                    This could be easier for user to input
+                                    Just modulo the hours with 24 and add the remainder to days.
+                                    Do the same for minutes?
+                                    This means we don't have to put a max on the number input!
+
+                                Clean up form, tried to make inline, an alternatives?
+                            */}
                             <Form.Group controlId="">
                                 <Form.Label>Duration</Form.Label>
-                                <Form.Control type="duration" placeholder="Enter duration" ref='duration' />
+                                <Form.Control inline type="number" placeholder="days" ref='duration_days' />
+                                <Form.Control inline type="number" placeholder="hours" min="0" max="24" ref='duration_hours' />
+                                <Form.Control inline type="number" placeholder="minutes" min="0" max="60" ref='duration_minutes' />
                             </Form.Group>
-
+                            
+                            {/* Task Interest Level */}
                             {/* Radios for interest level selection
                             *Dev* only one can be true, how to grab this input? */}
                             <Form.Group>
