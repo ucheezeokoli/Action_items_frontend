@@ -25,23 +25,29 @@ class LandingPage extends Component {
         console.log(this.refs.title.value)
         console.log(this.refs.date.value)
         console.log(this.refs.duration.value)
-        // console.log(this.refs.interest.value)
-        
+        console.log(this.refs.interest.value)
+
         user_api.post('api/tasks/', {
             title: this.refs.title.value,
             due_date: this.refs.date.value,
             duration: 3600,
-            interest: 4,
+            interest: this.refs.interest.value,
         })
-        .then((result) => {
-            console.log(result);
-            alert("Task Created!");
-        })
-        .catch((error) => {
-            alert("There was an error creating task.")
-            console.log(error)
-        })
+            .then((result) => {
+                console.log(result);
+                alert("Task Created!");
+            })
+            .catch((error) => {
+                alert("There was an error creating task.")
+                console.log(error)
+                this.taskCreated();
+            })
     }
+
+    taskCreated(){
+       return <Nav />; 
+    }
+
 
     render() {
         let createWindowClose = () => this.setState({ createWindowShow: false });
@@ -53,7 +59,7 @@ class LandingPage extends Component {
                 <div className="logout">
                     <Button variant="warning" onClick={this.props.handle_logout}>Log Out</Button>
                 </div>
-                
+
                 <br />
                 <div className="landingIntro"><h1 >Welcome User</h1>
                     <br />
@@ -87,9 +93,16 @@ class LandingPage extends Component {
                             *Dev* only one can be true, how to grab this input? */}
                             <Form.Group>
                                 <Form.Label>Interest Level</Form.Label>
+                                <Form.Control as="select" ref='interest'>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </Form.Control>
                                 <div>
-                                    {[1,2,3,4,5].map((number) => (
-                                        <Form.Check inline type='radio' id={`inline-radio-${number}`} label={number}/>
+                                    {[1, 2, 3, 4, 5].map((number) => (
+                                        <Form.Check inline type='radio' id={`inline-radio-${number}`} label={number} />
                                     ))}
                                 </div>
                             </Form.Group>
@@ -98,23 +111,23 @@ class LandingPage extends Component {
                     </Modal.Body>
                     <Modal.Footer>
 
-                        
-                            {/* <Button variant="primary" size="lg" block onClick={() => this.setState({ createWindowShow: false })}>
+
+                        {/* <Button variant="primary" size="lg" block onClick={() => this.setState({ createWindowShow: false })}>
                             Add to tasks
                             </Button> */}
-                           
-                           <Button onClick={this.addTask}>Add Task</Button>
-                       
+
+                        <Button onClick={this.addTask}>Add Task</Button>
+
                     </Modal.Footer>
                 </Modal>
 
-                <Tasks/>
+                <Tasks />
             </div>
         )
     }
 }
 export default LandingPage;
 
- /* <Button variant="primary" onClick={()=> this.setState({editWindowShow: false})}>
-                            Save Changes
-                        </Button> */
+/* <Button variant="primary" onClick={()=> this.setState({editWindowShow: false})}>
+                           Save Changes
+                       </Button> */
