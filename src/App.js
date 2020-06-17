@@ -6,6 +6,8 @@ import Loginpage from './components/Users/Loginpage';
 
 import LandingPage from './components/Tasks/LandingPage';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 // database api
 import user_api from './components/axios_api';

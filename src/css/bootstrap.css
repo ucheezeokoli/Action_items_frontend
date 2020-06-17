@@ -5421,7 +5421,7 @@ button.close {
   bottom: 0;
   left: 0;
   z-index: 1040;
-  background-color: rgb(119, 119, 119);
+  background-color: rgb(255, 255, 255);
 }
 
 .modal-backdrop.fade {
