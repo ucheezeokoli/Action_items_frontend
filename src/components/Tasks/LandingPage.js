@@ -30,7 +30,7 @@ class LandingPage extends Component {
         user_api.post('api/tasks/', {
             title: this.refs.title.value,
             due_date: this.refs.date.value,
-            duration: 3600,
+            duration: this.refs.duration.value,
             interest: this.refs.interest.value,
         })
             .then((result) => {
@@ -40,6 +40,8 @@ class LandingPage extends Component {
             .catch((error) => {
                 alert("There was an error creating task.")
                 console.log(error)
+                return <Nav />; 
+
                 this.taskCreated();
             })
     }
@@ -53,7 +55,7 @@ class LandingPage extends Component {
         let createWindowClose = () => this.setState({ createWindowShow: false });
         return (
             <div className="landing">
-                <Nav />
+                {/* <Nav /> */}
 
                 {/*! New Log Out Button, the onClick prop calls a function passed down App.js !*/}
                 <div className="logout">
