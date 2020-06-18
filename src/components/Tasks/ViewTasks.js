@@ -36,7 +36,6 @@ class Tasks extends Component{
      componentDidMount() {
         user_api.get('api/tasks/')
         .then((response) => {
-            // console.log(response.data.data);
             this.setState({tasks: response.data.data})
         })
         .catch((error) => {
