@@ -3,6 +3,8 @@ import './../../css/App.css';
 
 import user_api from './../axios_api';
 
+import TaskEdit from './TaskEdit';
+
 
 //FROM BOOTSTRAP
 import Container from 'react-bootstrap/Container';
@@ -18,7 +20,7 @@ import Button from 'react-bootstrap/Button';
 import CreateSharpIcon from '@material-ui/icons/CreateSharp';
 const EditIcon = CreateSharpIcon;
 
-class Tasks extends Component{
+class ViewTasks extends Component{
     constructor(props) {
         super(props);
 
@@ -43,8 +45,23 @@ class Tasks extends Component{
         });
     }
 
+    TaskEdit = () => {
+        let editWindowClose = () => this.setState({ editWindowShow: false });
+        this.setState({editWindowShow: true});
+        return (<TaskEdit editWindowShow={this.state.editWindowShow} editWindowClose={editWindowClose} />)
+    }
+
     render(){
         let editWindowClose = () => this.setState({ editWindowShow: false });
+
+        // let hoadoesntsuck;
+        //     if (this.state.editWindowShow){
+        //         hoadoesntsuck = <TaskEdit editWindowShow={this.state.editWindowShow} editWindowClose={editWindowClose} />
+        //     }
+        //     else{
+        //         hoadoesntsuck = <p>anything I want </p>
+        //         }
+            
         return( 
             <div className="tasks">
                 <br />
@@ -78,7 +95,7 @@ class Tasks extends Component{
                                             <td>{c.duration}</td>
                                             <td>{c.interest}</td>
                                             <td>
-                                                <EditIcon className="editButton" onClick={() => this.setState({ editWindowShow: true })} />
+                                                <EditIcon className="editButton" onClick={this.setState({editWindowShow: true})} />
                                             </td>
                                         </tr>)}
                                 </tbody>
@@ -87,10 +104,16 @@ class Tasks extends Component{
 
                     </Row>
                 </Container>
+                {/* {
+                    hoadoesntsuck
+                } */}
+                
                 </div>
+
+
                 
 
-                <Modal {...this.props} show={this.state.editWindowShow} onHide={editWindowClose}>
+                {/* <Modal {...this.props} show={this.state.editWindowShow} onHide={editWindowClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Edit task {this.state.tasks.map(d => d.title)}</Modal.Title>
                     </Modal.Header>
@@ -126,9 +149,9 @@ class Tasks extends Component{
                     </Button>
                         {/* <Button variant="primary" onClick={()=> this.setState({editWindowShow: false})}>
                             Save Changes
-                        </Button> */}
+                        </Button>
                     </Modal.Footer>
-                </Modal>
+                </Modal> */}
 
 
             </div>
@@ -137,4 +160,4 @@ class Tasks extends Component{
     }
 }
 
-export default Tasks;
+export default ViewTasks;
